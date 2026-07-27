@@ -1,7 +1,6 @@
 # Data manifest
 
-The calculation requires the following input files, which are **not** included in
-this repository. Place them under `data/` with the paths shown below before
+The calculation requires the following input files, which are included under `data/` with the paths shown below before
 running the code.
 
 ## 1. Molecular dynamics frame
