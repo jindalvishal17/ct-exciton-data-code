@@ -105,7 +105,7 @@ wolframscript -file src/01_import_configuration.wl
 
 ## Data availability
 
-The input data files (MD frame, ML predictions, DFT energies) are **not**
+The input data files (MD frame, ML predictions, DFT energies) are
 included in this repository. See [DATA_MANIFEST.md](DATA_MANIFEST.md) for the
 complete list, expected locations, and formats. Add the data files before
 attempting to reproduce the results.
