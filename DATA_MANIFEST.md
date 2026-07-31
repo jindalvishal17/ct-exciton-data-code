@@ -1,7 +1,9 @@
 # Data manifest
 
 The calculation requires the following input files, which are included under `data/` with the paths shown below before
-running the code.
+running the code in [CT Exciton Final Code v8.nb](CT%20Exciton%20Final%20Code%20v8.nb).
+
+The notebook and the Wolfram Language modules in `src/` all use the same top-level `data/` layout.
 
 ## 1. Molecular dynamics frame
 
@@ -20,7 +22,8 @@ specific atom count/order of this frame.
 
 `src/04_interchain_hopping_ML.wl` also **exports** the six geometric features
 per contact to `results/SixParametersCTexciton1.txt`, which is the input to the
-external ML model that produced `predictedt600.csv`.
+external ML model that produced `predictedt600.csv`. The model used for this
+prediction is the one described in citation 46 of the manuscript.
 
 ## 3. DFT energies (intrachain hopping)
 

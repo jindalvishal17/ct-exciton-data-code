@@ -8,7 +8,11 @@ Companion code for:
 
 This repository implements the tight-binding model used in the paper to compute
 charge-transfer (CT) exciton energies at the donor–acceptor interface between
-poly(3-hexylthiophene) (P3HT) and the non-fullerene acceptor O-IDTBR.
+poly(3-hexylthiophene) (P3HT) and the non-fullerene acceptor O-IDTBR. The
+self-contained deliverable is [CT Exciton Final Code v8.nb](CT%20Exciton%20Final%20Code%20v8.nb).
+Use the v8 notebook if you want the shortest path to reproducing the manuscript
+results; the modular `.wl` files can also be used because they contain the same
+workflow split into subparts.
 
 ## What this code does
 
@@ -21,7 +25,8 @@ blend, the code:
 3. **Builds** the smeared (Gaussian) 14×14 Coulomb interaction kernel
    (Eq. 6–7).
 4. **Computes** the interchain hopping `t_ab` via a machine-learning model
-   trained on ring-pair geometry (Fig. 6).
+   trained on ring-pair geometry and described in citation 46 of the
+   manuscript (Fig. 6).
 5. **Computes** the intrachain hopping matrix elements from DFT dimer energies
    using the energy-splitting method (Figs. 4–5, Table 2).
 6. **Assembles** the onsite, hopping, and Coulomb parameters (Tables 1–2).
@@ -36,7 +41,6 @@ blend, the code:
 
 ```
 .
-├── CT_Exciton_Master.nb        # entry-point notebook (documents + runs all modules)
 ├── src/
 │   ├── 00_config.wl                    # paths & physical constants
 │   ├── 01_import_configuration.wl      # MD frame import, PBC
@@ -55,17 +59,23 @@ blend, the code:
 ## Requirements
 
 - **Wolfram Mathematica** (developed on 13.1; any recent version should work).
-  The `.wl` files are plain-text Wolfram Language scripts and can also be run
-  head-less with `wolframscript`.
+   Install the Mathematica application in the standard macOS Applications folder
+   or another local app location recognized by your system, then activate it with
+   a valid Mathematica/Wolfram license or Wolfram ID entitlement. The notebook
+   assumes a licensed desktop installation.
+- The `.wl` files are plain-text Wolfram Language scripts and can also be run
+   head-less with `wolframscript` if that tool is installed alongside
+   Mathematica.
 
 ## How to run
 
 1. Place the required input data files in `data/` (see
    [DATA_MANIFEST.md](DATA_MANIFEST.md)).
-2. Open `CT_Exciton_Master.nb` in Mathematica.
-3. Evaluate the **Setup** cell, then evaluate the module cells **00 → 09** in
-   order. Module 09 minimizes the exciton energy for all 237 contacts and may
-   take several minutes.
+2. Open [CT Exciton Final Code v8.nb](CT%20Exciton%20Final%20Code%20v8.nb) in Mathematica.
+3. Evaluate the notebook cells from top to bottom. The notebook is
+   self-contained and runs the full workflow that generates the paper plots.
+   Module 09 minimizes the exciton energy for all 237 contacts and may take
+   several minutes.
 
 Alternatively, run head-less:
 
@@ -90,18 +100,22 @@ wolframscript -file src/01_import_configuration.wl
 
 ## Notes on this reorganization
 
-- The original single large notebook (`CT-Exciton-Final-Code-v8.nb`) has been
-  split into ten commented modules that map one-to-one onto the Methods and
-  Results sections of the paper. Each module header cites the relevant equation,
-  figure, or table.
+- [CT Exciton Final Code v8.nb](CT%20Exciton%20Final%20Code%20v8.nb) is the
+   canonical, self-contained notebook for reproducing the paper plots.
+- The files in `src/` are the modular subparts that the notebook uses under the
+   hood. They are kept as plain Wolfram Language scripts for readability and
+   line-by-line evaluation. Their added comments and headings were generated
+   with LLM assistance to make the workflow easier to follow.
+- The authors used [CT Exciton Final Code v8.nb](CT%20Exciton%20Final%20Code%20v8.nb)
+  for the analysis reported in the manuscript.
 - All file paths were converted from absolute machine-specific paths to
-  **relative** paths under `data/` so the repository is portable.
+   **relative** paths under `data/` so the repository is portable.
 - **Reconstructed code:** In the original notebook the total-energy function
-  `CTexctionE` and the initial wavefunctions `psiEfull` / `psiHfull` were
-  referenced but not defined. `CTexctionE` has been reconstructed exactly from
-  Eq. (12) and the component decomposition in `CTSolve` (which was present);
-  `psiEfull` / `psiHfull` are given localized polaron-based initial guesses.
-  These reconstructions are flagged in `src/09_ct_exciton_energy_analysis.wl`.
+   `CTexctionE` and the initial wavefunctions `psiEfull` / `psiHfull` were
+   referenced but not defined. `CTexctionE` has been reconstructed exactly from
+   Eq. (12) and the component decomposition in `CTSolve` (which was present);
+   `psiEfull` / `psiHfull` are given localized polaron-based initial guesses.
+   These reconstructions are flagged in `src/09_ct_exciton_energy_analysis.wl`.
 
 ## Data availability
 
@@ -109,7 +123,3 @@ The input data files (MD frame, ML predictions, DFT energies) are
 included in this repository. See [DATA_MANIFEST.md](DATA_MANIFEST.md) for the
 complete list, expected locations, and formats. Add the data files before
 attempting to reproduce the results.
-
-## License
-
-See [LICENSE](LICENSE).
